@@ -20,14 +20,10 @@ package org.eurekaclinical.i2b2integration.webapp.config;
  * #L%
  */
 
-import java.util.HashMap;
-import java.util.Map;
-import org.eurekaclinical.common.config.AbstractServletModule;
-import org.eurekaclinical.common.servlet.DestroySessionServlet;
-import org.eurekaclinical.common.servlet.LogoutServlet;
-import org.eurekaclinical.common.servlet.PostMessageLoginServlet;
-import org.eurekaclinical.common.servlet.ProxyServlet;
+import org.eurekaclinical.common.config.ApiGatewayServletModule;
 import org.eurekaclinical.i2b2integration.webapp.props.WebappProperties;
+import org.eurekaclinical.i2b2integration.webapp.servlets.CustomProxyServlet;
+
 
 /**
  * A Guice configuration module for setting up the web infrastructure and
@@ -36,31 +32,20 @@ import org.eurekaclinical.i2b2integration.webapp.props.WebappProperties;
  * @author Andrew Post
  *
  */
-public class ServletModule extends AbstractServletModule {
+public class ServletModule extends ApiGatewayServletModule {
     
-    private final WebappProperties properties;
-
     public ServletModule(WebappProperties inProperties) {
         super(inProperties);
-        this.properties = inProperties;
     }
-    
     @Override
     protected void setupServlets() {
-        serve("/proxy-resource/*").with(ProxyServlet.class);
-        serve("/protected/get-session").with(PostMessageLoginServlet.class);
-        serve("/logout").with(LogoutServlet.class);
-        serve("/destroy-session").with(DestroySessionServlet.class);
+        super.setupServlets();
+        serveProxy();
     }
-
-    @Override
-    protected Map<String, String> getCasValidationFilterInitParams() {
-        Map<String, String> params = new HashMap<>();
-        params.put("casServerUrlPrefix", this.properties.getCasUrl());
-        params.put("serverName", this.properties.getProxyCallbackServer());
-        params.put("proxyCallbackUrl", getCasProxyCallbackUrl());
-        params.put("proxyReceptorUrl", getCasProxyCallbackPath());
-        return params;
-    }
-
+    /**
+     * Serves <code>/proxy-resource/*</code>.
+     */
+    protected void serveProxy() {
+        serve("/i2b2/*").with(CustomProxyServlet.class);
+    } 
 }

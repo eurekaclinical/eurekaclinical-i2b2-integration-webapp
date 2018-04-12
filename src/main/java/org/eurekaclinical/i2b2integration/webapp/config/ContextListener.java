@@ -56,7 +56,7 @@ public class ContextListener extends GuiceServletContextListener {
         this.injector = new InjectorSupport(
                     new Module[]{
                         new AppModule(this.properties),
-                        new ApiGatewayServletModule(this.properties)},
+                        new ServletModule(this.properties)},
                     this.properties).getInjector();
         return this.injector;
     }

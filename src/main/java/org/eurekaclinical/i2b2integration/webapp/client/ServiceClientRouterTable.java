@@ -34,7 +34,7 @@ public class ServiceClientRouterTable implements RouterTable {
 
     private final EurekaClinicalI2b2IntegrationClient i2b2IntegrationClient;
     
-    @Inject(optional=true)
+    @Inject(optional=true)	
     private EurekaClinicalUserAgreementClient userAgreementClient;
 
     @Inject
