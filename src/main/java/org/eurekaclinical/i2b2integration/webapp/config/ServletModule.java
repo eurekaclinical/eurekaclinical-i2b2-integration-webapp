@@ -40,12 +40,6 @@ public class ServletModule extends ApiGatewayServletModule {
     @Override
     protected void setupServlets() {
         super.setupServlets();
-        serveProxy();
+        serve("/i2b2*").with(CustomProxyServlet.class);
     }
-    /**
-     * Serves <code>/proxy-resource/*</code>.
-     */
-    protected void serveProxy() {
-        serve("/i2b2/*").with(CustomProxyServlet.class);
-    } 
 }
