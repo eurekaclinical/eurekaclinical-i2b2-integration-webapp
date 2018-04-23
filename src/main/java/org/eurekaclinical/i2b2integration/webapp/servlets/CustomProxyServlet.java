@@ -41,7 +41,6 @@ import org.eurekaclinical.common.comm.clients.ClientException;
 import com.google.inject.Singleton;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
-import java.io.BufferedReader;
 import java.net.URISyntaxException;
 
 @Singleton
@@ -60,9 +59,20 @@ public class CustomProxyServlet extends HttpServlet {
             requestHeadersToExclude.add(header.toUpperCase());
         }
     }
+    
+    private static final Set<String> responseHeadersToExclude;
+
+    static {
+        responseHeadersToExclude = new HashSet<>();
+        for (String header : new String[]{
+            "Connection", "Keep-Alive", "Proxy-Authenticate", "Proxy-Authorization",
+            "TE", "Trailers", "Transfer-Encoding", "Upgrade", HttpHeaders.SET_COOKIE
+        }) {
+            responseHeadersToExclude.add(header.toUpperCase());
+        }
+    }
 
     public CustomProxyServlet() {
-        System.out.println("+++++++++++I AM INITIALIZED++++++++++");
     }
 
     @Override
@@ -70,7 +80,6 @@ public class CustomProxyServlet extends HttpServlet {
         try {
 
             String xml = extractXml(request);
-            System.out.println("XML is " + xml);
             String pmUrl = extractProxyAddress(xml);
             if (pmUrl != null) {
                 URL url = new URL(pmUrl);
@@ -78,10 +87,8 @@ public class CustomProxyServlet extends HttpServlet {
                 MultivaluedMap<String, String> requestHeaders = extractRequestHeaders(request);
                 try {
                     ClientResponse clientResponse = client.proxyPost(xml, null, requestHeaders);
-                    System.out.println("proxyResponse:" + clientResponse.toString());
-                    int clientResponseStatus = clientResponse.getStatus();
-                    System.out.println("clientResponseStatus" + clientResponseStatus);
-                    copyResponseHeaders(clientResponse.getHeaders(), request.getServletPath(), baseUrl(request.getContextPath(), request).toString(), response);
+                    response.setStatus(clientResponse.getStatus());
+                    copyResponseHeaders(clientResponse.getHeaders(), baseUrl(request.getContextPath(), request).toString(), response);
                     copyStream(clientResponse.getEntityInputStream(), response.getOutputStream());
                 } catch (ClientException e) {
                     response.setStatus(e.getResponseStatus().getStatusCode());
@@ -94,7 +101,6 @@ public class CustomProxyServlet extends HttpServlet {
         } catch (IOException | URISyntaxException e) {
             throw new ServletException(e);
         }
-        System.out.println("request has been forwarded");
     }
 
     /**
@@ -152,20 +158,18 @@ public class CustomProxyServlet extends HttpServlet {
 
     private static void copyResponseHeaders(
             MultivaluedMap<String, String> headers,
-            String servletPath,
             String proxyResourceUrl,
             HttpServletResponse response) {
         if (headers != null) {
             for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
                 String key = entry.getKey();
                 for (String val : entry.getValue()) {
-                    /*  if ("Location".equals(key.toUpperCase())) {
-                        	System.out.println("inside location condition");
-                        	System.out.println("key:"+key+" value:"+replacementPathAndClient.revertPath(proxyResourceUrl));
-                            response.addHeader(key, replacementPathAndClient.revertPath(proxyResourceUrl));
-                        }*/
-                    System.out.println("key1:" + key + " value:" + val);
-                    response.addHeader(key, val);
+                    if (!responseHeadersToExclude.contains(key.toUpperCase())) {
+//                        if ("Location".equals(key.toUpperCase())) {
+//                            response.addHeader(key, replacementPathAndClient.revertPath(proxyResourceUrl));
+//                        }
+                        response.addHeader(key, val);
+                    }
                 }
             }
         }
