@@ -21,7 +21,6 @@ package org.eurekaclinical.i2b2integration.webapp.servlets;
  */
 
 
-import java.io.InputStream;
 import java.net.URI;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -48,7 +47,6 @@ class I2b2EurekaClinicalClient extends EurekaClinicalClient {
 
     ClientResponse proxyPost(String body, MultivaluedMap<String, String> parameterMap, MultivaluedMap<String, String> headers)
             throws ClientException {
-        System.out.println("uri++++:" + uri);
         return doPostForProxy("", body, parameterMap, headers);
     }
 }
