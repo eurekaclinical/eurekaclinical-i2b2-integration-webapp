@@ -1,5 +1,5 @@
 # Eureka! Clinical I2b2 Integration Webapp
-[Atlanta Clinical and Translational Science Institute (ACTSI)](http://www.actsi.org), [Emory University](http://www.emory.edu), Atlanta, GA
+[Georgia Clinical and Translational Science Alliance (Georgia CTSA)](http://www.georgiactsa.org), [Emory University](http://www.emory.edu), Atlanta, GA
 
 ## What does it do?
 It implements a proxy servlet and router for web clients to access the web services provided by eurekaclinical-i2b2-integration-service.
