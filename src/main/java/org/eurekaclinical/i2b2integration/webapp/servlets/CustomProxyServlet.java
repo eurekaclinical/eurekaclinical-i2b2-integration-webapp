@@ -107,15 +107,14 @@ public class CustomProxyServlet extends HttpServlet {
                     copyStream(clientResponse.getEntityInputStream(), out);
                 } catch (ClientException e) {
                     int responseStatus = e.getResponseStatus().getStatusCode();
-                    LOGGER.debug("Proxy error, response status: {}", responseStatus);
+                    LOGGER.error("Proxy error, response status: {}", responseStatus);
                     response.setStatus(responseStatus);
                     String responseMessage = e.getLocalizedMessage();
-                    LOGGER.debug("Proxy error, response message: {}", responseMessage);
-                    out.println(responseMessage);
+                    LOGGER.error("Proxy error, response message: {}", responseMessage);
                 }
             } else {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                out.println("No proxy address specified");
+                LOGGER.error("No proxy address specified");
             }
         } catch (IOException e) {
             throw new ServletException(e);
