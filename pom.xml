@@ -31,7 +31,7 @@
     </issueManagement>
     
     <properties>
-        <ec-i2b2-integration-client-version>2.0</ec-i2b2-integration-client-version>
+        <ec-i2b2-integration-client-version>2.1-Alpha-1</ec-i2b2-integration-client-version>
         <ec-user-agreement-client-version>2.3-Beta-1</ec-user-agreement-client-version>
         <ec-common-version>4.0</ec-common-version>
         <ec-standard-apis-version>3.0.1</ec-standard-apis-version>
