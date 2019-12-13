@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>eurekaclinical-i2b2-integration-webapp</artifactId>
     <packaging>war</packaging>
-    <version>2.1-Alpha-7-SNAPSHOT</version>
+    <version>2.2-Alpha-1-SNAPSHOT</version>
     <name>Eureka! Clinical I2b2 Integration Webapp</name>
     <description>Provides a proxy for accessing i2b2 integration services.
     </description>
@@ -31,12 +31,12 @@
     </issueManagement>
     
     <properties>
-        <ec-i2b2-integration-client-version>2.1-Alpha-4-SNAPSHOT</ec-i2b2-integration-client-version>
-        <ec-user-agreement-client-version>2.3-Beta-4-SNAPSHOT</ec-user-agreement-client-version>
-        <ec-common-version>5.0-Alpha-7-SNAPSHOT</ec-common-version>
-        <ec-standard-apis-version>4.0-Alpha-6-SNAPSHOT</ec-standard-apis-version>
-        <eurekaclinical-i2b2-integration-service-version>2.0-Alpha-5-SNAPSHOT</eurekaclinical-i2b2-integration-service-version>
-        <eurekaclinical-user-agreement-service-version>3.1-Beta-5-SNAPSHOT</eurekaclinical-user-agreement-service-version>
+        <ec-i2b2-integration-client-version>2.2-Alpha-1-SNAPSHOT</ec-i2b2-integration-client-version>
+        <ec-user-agreement-client-version>2.4-Alpha-1-SNAPSHOT</ec-user-agreement-client-version>
+        <ec-common-version>5.1-Alpha-1-SNAPSHOT</ec-common-version>
+        <ec-standard-apis-version>4.1-Alpha-1-SNAPSHOT</ec-standard-apis-version>
+        <eurekaclinical-i2b2-integration-service-version>2.1-Alpha-1-SNAPSHOT</eurekaclinical-i2b2-integration-service-version>
+        <eurekaclinical-user-agreement-service-version>3.2-Alpha-1-SNAPSHOT</eurekaclinical-user-agreement-service-version>
     </properties>
     
     <build>
@@ -294,4 +294,3 @@
         </profile>
     </profiles>
 </project>
-
