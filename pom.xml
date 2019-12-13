@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent-standard-deps</artifactId>
-        <version>4-Alpha-3</version>
+        <version>4-Alpha-4-SNAPSHOT</version>
     </parent>
 
     <url>https://github.com/eurekaclinical/eurekaclinical-i2b2-integration-webapp.git</url>
@@ -31,12 +31,12 @@
     </issueManagement>
     
     <properties>
-        <ec-i2b2-integration-client-version>[2.1,)</ec-i2b2-integration-client-version>
-        <ec-user-agreement-client-version>[2.3,)</ec-user-agreement-client-version>
-        <ec-common-version>[5.0,)</ec-common-version>
-        <ec-standard-apis-version>[4.0,)</ec-standard-apis-version>
-        <eurekaclinical-i2b2-integration-service-version>[2.0,)</eurekaclinical-i2b2-integration-service-version>
-        <eurekaclinical-user-agreement-service-version>[3.1,)</eurekaclinical-user-agreement-service-version>
+        <ec-i2b2-integration-client-version>2.2-Alpha-1-SNAPSHOT</ec-i2b2-integration-client-version>
+        <ec-user-agreement-client-version>2.4-Alpha-1-SNAPSHOT</ec-user-agreement-client-version>
+        <ec-common-version>5.1-Alpha-1-SNAPSHOT</ec-common-version>
+        <ec-standard-apis-version>4.1-Alpha-1-SNAPSHOT</ec-standard-apis-version>
+        <eurekaclinical-i2b2-integration-service-version>2.1-Alpha-1-SNAPSHOT</eurekaclinical-i2b2-integration-service-version>
+        <eurekaclinical-user-agreement-service-version>3.2-Alpha-1-SNAPSHOT</eurekaclinical-user-agreement-service-version>
     </properties>
     
     <build>
@@ -294,4 +294,3 @@
         </profile>
     </profiles>
 </project>
-
