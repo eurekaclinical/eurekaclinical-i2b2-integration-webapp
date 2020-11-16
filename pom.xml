@@ -35,7 +35,7 @@
         <ec-user-agreement-client-version>2.4-Alpha-2</ec-user-agreement-client-version>
         <ec-common-version>5.1-Alpha-1</ec-common-version>
         <ec-standard-apis-version>4.1-Alpha-1</ec-standard-apis-version>
-        <eurekaclinical-i2b2-integration-service-version>2.1-Alpha-2</eurekaclinical-i2b2-integration-service-version>
+        <eurekaclinical-i2b2-integration-service-version>2.1-Alpha-3</eurekaclinical-i2b2-integration-service-version>
         <eurekaclinical-user-agreement-service-version>3.2-Alpha-2</eurekaclinical-user-agreement-service-version>
         <!-- maven.javadoc.skip>true</maven.javadoc.skip-->
     </properties>

@@ -43,14 +43,15 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 import java.io.BufferedReader;
 import java.io.Reader;
 import javax.servlet.ServletOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class CustomProxyServlet extends HttpServlet {
 
     private static final long serialVersionUID = 0L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomProxyServlet.class);
+    private static final Logger LOGGER = Logger.getLogger(CustomProxyServlet.class.getName());
     private static final Set<String> REQUEST_HEADERS_TO_EXCLUDE;
 
     private static final String REDIRECT_OPEN_TAG = "<redirect_url>";
@@ -87,34 +88,34 @@ public class CustomProxyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
             String xml = extractBody(request.getReader());
-            LOGGER.debug("Request message: {}", xml);
+            LOGGER.log(Level.INFO,"Request message: {}", xml);
             String pmUrl = extractProxyAddress(xml);
             ServletOutputStream out = response.getOutputStream();
             if (pmUrl != null) {
                 I2b2EurekaClinicalClient client = new I2b2EurekaClinicalClient(URI.create(pmUrl));
                 MultivaluedMap<String, String> requestHeaders = extractRequestHeaders(request);
-                LOGGER.debug("Request headers: {}", requestHeaders);
+                LOGGER.log(Level.INFO,"Request headers: {}", requestHeaders);
                 try {
                     ClientResponse clientResponse = client.proxyPost(xml, null, requestHeaders);
                     int responseStatus = clientResponse.getStatus();
-                    LOGGER.debug("Proxy response status: {}", responseStatus);
+                    LOGGER.log(Level.INFO,"Proxy response status: {}", responseStatus);
                     response.setStatus(responseStatus);
                     MultivaluedMap<String, String> responseHeaders = clientResponse.getHeaders();
-                    LOGGER.debug("Proxy response headers: {}", responseHeaders);
+                    LOGGER.log(Level.INFO,"Proxy response headers: {}", responseHeaders);
                     copyResponseHeaders(responseHeaders, 
                             baseUrl(request.getContextPath(), request).toString(), 
                             response);
                     copyStream(clientResponse.getEntityInputStream(), out);
                 } catch (ClientException e) {
                     int responseStatus = e.getResponseStatus().getStatusCode();
-                    LOGGER.error("Proxy error, response status: {}", responseStatus);
+                    LOGGER.log(Level.INFO,"Proxy error, response status: {}", responseStatus);
                     response.setStatus(responseStatus);
                     String responseMessage = e.getLocalizedMessage();
-                    LOGGER.error("Proxy error, response message: {}", responseMessage);
+                    LOGGER.log(Level.INFO,"Proxy error, response message: {}", responseMessage);
                 }
             } else {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                LOGGER.error("No proxy address specified");
+                LOGGER.log(Level.INFO,"No proxy address specified");
             }
         } catch (IOException e) {
             throw new ServletException(e);
